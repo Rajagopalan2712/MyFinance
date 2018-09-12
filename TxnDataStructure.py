@@ -3,18 +3,20 @@ import FinanceClasses
 import FinanceUtil
 import csv
 from pathlib import Path
+import os
+
 
 class Transactions:
     def __init__(self):
         self.credit_transactions = []
         self.credit_card_purchases = []
-        with open(Path.home()._make_child_relpath("/Documents/FinanceData/creditTxn.csv")) as csv_file:
+        with open(Path(os.path.expanduser("~")+"/Documents/FinanceData/creditTxn.csv")) as csv_file:
             csv_reader = csv.reader(csv_file, delimiter=',')
             for row in csv_reader:
                 transaction = FinanceClasses.Transaction(FinanceUtil.datetime_from_string(row[0]), row[1], row[2],
                                                          row[3], row[4], row[5])
                 self.credit_transactions.append(transaction)
-        with open(Path.home()._make_child_relpath("/Documents/FinanceData/debitTxn.csv")) as csv_file:
+        with open(Path(os.path.expanduser("~")+"/Documents/FinanceData/debitTxn.csv")) as csv_file:
             csv_reader = csv.reader(csv_file, delimiter=',')
             for row in csv_reader:
                 transaction = FinanceClasses.Transaction(FinanceUtil.datetime_from_string(row[0]), row[1], row[2],
