@@ -1,9 +1,21 @@
-
-import FinanceClasses
 import FinanceUtil
 import csv
 from pathlib import Path
 import os
+from datetime import date
+
+
+class Transaction:
+    def __init__(self, txn_date: date, merchant, category, amount, account, txn_type):
+        self.txn_date = txn_date
+        self.merchant = merchant
+        self.category = category
+        self.amount = amount
+        self.account = account
+        self.txn_type = txn_type
+
+    def __str__(self):
+        return self.txn_date.__str__()+","+self.merchant+","+self.category+","+self.amount+","+self.account+","+self.txn_type+","+"\n"
 
 
 class Transactions:
@@ -13,13 +25,13 @@ class Transactions:
         with open(Path(os.path.expanduser("~")+"/Documents/FinanceData/creditTxn.csv")) as csv_file:
             csv_reader = csv.reader(csv_file, delimiter=',')
             for row in csv_reader:
-                transaction = FinanceClasses.Transaction(FinanceUtil.datetime_from_string(row[0]), row[1], row[2],
+                transaction = Transaction(FinanceUtil.datetime_from_string(row[0]), row[1], row[2],
                                                          row[3], row[4], row[5])
                 self.credit_transactions.append(transaction)
         with open(Path(os.path.expanduser("~")+"/Documents/FinanceData/debitTxn.csv")) as csv_file:
             csv_reader = csv.reader(csv_file, delimiter=',')
             for row in csv_reader:
-                transaction = FinanceClasses.Transaction(FinanceUtil.datetime_from_string(row[0]), row[1], row[2],
+                transaction = Transaction(FinanceUtil.datetime_from_string(row[0]), row[1], row[2],
                                                          row[3], row[4], row[5])
                 self.credit_card_purchases.append(transaction)
 
@@ -33,7 +45,7 @@ class Transactions:
                 if line_num == 0:
                     line_num = 1
                     continue
-                transaction = FinanceClasses.Transaction(FinanceUtil.datetime_from_string(row[0]), row[1], row[5],
+                transaction = Transaction(FinanceUtil.datetime_from_string(row[0]), row[1], row[5],
                                                          row[3], row[6], row[4])
                 if "credit" == row[4]:
                     self.credit_transactions.append(transaction)
