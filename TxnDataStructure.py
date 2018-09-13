@@ -74,5 +74,14 @@ class Transactions:
 
         return txn_map
 
-    def is_category_defined(self):
-        categoryRules = Path("/path/to/file")
+    def generate_report_by_card(self, month: int, year: int):
+        txn_map = {}
+        for txn in self.credit_card_purchases:
+            if txn.txn_date.month == month and txn.txn_date.year == year:
+                if txn.account in txn_map:
+                    txn_amount = txn_map[txn.account]
+                    txn_map[txn.account] = float(txn.amount) + txn_amount
+                else:
+                    txn_map[txn.account] = float(txn.amount)
+
+        return txn_map

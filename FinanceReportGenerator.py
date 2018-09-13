@@ -21,6 +21,11 @@ print("To generate report, please enter month and year")
 month = int(input("Enter Month : "))
 year = int(input("Enter Year : "))
 
+print("*********** Transaction Report by merchant *********")
 txn_map = transactions.generate_report_by_merchant(month, year)
+for entry in txn_map:
+    print(entry + " : " + str(txn_map[entry]))
+print("*********** Transaction Report by account *********")
+txn_map = transactions.generate_report_by_card(month, year)
 for entry in txn_map:
     print(entry + " : " + str(txn_map[entry]))
