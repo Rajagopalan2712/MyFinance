@@ -71,7 +71,7 @@ class Transactions:
                     txn_map[txn.merchant] = float(txn.amount) + txn_amount
                 else:
                     txn_map[txn.merchant] = float(txn.amount)
-
+        print("completed generating report by merchant names")
         return txn_map
 
     def generate_report_by_card(self, month: int, year: int):
@@ -83,5 +83,5 @@ class Transactions:
                     txn_map[txn.account] = float(txn.amount) + txn_amount
                 else:
                     txn_map[txn.account] = float(txn.amount)
-
+        print("completed generating report by credit card")
         return txn_map
